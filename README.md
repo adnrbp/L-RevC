@@ -26,6 +26,7 @@ gcc -ggdb -o app-b.exe app.c
 
 
 
+
 Dump from binary
 ------
 
@@ -47,8 +48,10 @@ objdump -M intel -S --disassemble app.exe > app-i.dump
 Debug binary
 ------
 ```bash
-gdb ./app-b.exe
+gdb -q ./app-b.exe
 ```
+	* -q: quiet, do not print the intro and copyright messages.
+
 	Commands for GDB
 	* q: quit
 	* h | help break
