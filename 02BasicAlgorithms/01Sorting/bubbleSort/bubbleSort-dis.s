@@ -31,59 +31,79 @@
   4005fb:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     # //int n
   4005ff:	89 75 e4             	mov    DWORD PTR [rbp-0x1c],esi
-    # iter = 0; //[rbp-0x4]
-  400602:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+    # iter = 0; //[rbp-0x4] #iter
+  400602:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0 #iter
 
   400609:	e9 8a 00 00 00       	jmp    400698 <bubbleSort+0xa5>
+
     # // <bubbleSort+0x1b>
-  40060e:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+    # pos = 0; //[rbp-0x8] #pos
+  40060e:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0 #pos
   400615:	eb 6f                	jmp    400686 <bubbleSort+0x93>
-    # <bubbleSort+0x24>
-  400617:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+
+    # <bubbleSort+0x24> //INSIDE FOR n.2.
+  400617:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8] #pos
   40061a:	48 98                	cdqe   
+  
   40061c:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
   400623:	00 
   400624:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   400628:	48 01 d0             	add    rax,rdx
+
   40062b:	8b 10                	mov    edx,DWORD PTR [rax]
-  40062d:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+
+  40062d:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8] #pos
+    #//Convert dword (eax) to qword (rax)
   400630:	48 98                	cdqe   
   400632:	48 83 c0 01          	add    rax,0x1
   400636:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
   40063d:	00 
+    #//inputVector[pos+1]
   40063e:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   400642:	48 01 c8             	add    rax,rcx
   400645:	8b 00                	mov    eax,DWORD PTR [rax]
+    # if (inputVector[pos] < inputVector[pos+1])
   400647:	39 c2                	cmp    edx,eax
   400649:	7d 37                	jge    400682 <bubbleSort+0x8f>
-  40064b:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  40064b:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8] #pos
   40064e:	48 98                	cdqe   
   400650:	48 83 c0 01          	add    rax,0x1
   400654:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
   40065b:	00 
   40065c:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   400660:	48 01 c2             	add    rdx,rax
-  400663:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  400663:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8] #pos
   400666:	48 98                	cdqe   
   400668:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
   40066f:	00 
+    #//inputVector[pos+1]
   400670:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   400674:	48 01 c8             	add    rax,rcx
+
   400677:	48 89 d6             	mov    rsi,rdx
   40067a:	48 89 c7             	mov    rdi,rax
   40067d:	e8 44 ff ff ff       	call   4005c6 <change_pos>
-  400682:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-      # //<bubbleSort+0x93>
+    #// pos++ //inside FOR n.2
+  400682:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1 #pos
+    # //<bubbleSort+0x93>
+    # pos < n-iter-1 //inside FOR n.2
   400686:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  400689:	2b 45 fc             	sub    eax,DWORD PTR [rbp-0x4]
+  400689:	2b 45 fc             	sub    eax,DWORD PTR [rbp-0x4] #iter
   40068c:	83 e8 01             	sub    eax,0x1
-  40068f:	3b 45 f8             	cmp    eax,DWORD PTR [rbp-0x8]
+  40068f:	3b 45 f8             	cmp    eax,DWORD PTR [rbp-0x8] #pos
+    #//JUMP to the code INSIDE FOR n.2.
   400692:	7f 83                	jg     400617 <bubbleSort+0x24>
-  400694:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+
+
+
+    # // iter++ //inside FOR n.1
+  400694:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1 #iter
     #//<bubbleSort+0xa5>
+    # iter < n-1  //inside FOR n.1
   400698:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
   40069b:	83 e8 01             	sub    eax,0x1
-  40069e:	3b 45 fc             	cmp    eax,DWORD PTR [rbp-0x4]
+  40069e:	3b 45 fc             	cmp    eax,DWORD PTR [rbp-0x4] #iter
+
   4006a1:	0f 8f 67 ff ff ff    	jg     40060e <bubbleSort+0x1b>
   4006a7:	90                   	nop
   4006a8:	c9                   	leave  
@@ -95,9 +115,9 @@
   4006ae:	48 83 ec 20          	sub    rsp,0x20
   4006b2:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
   4006b6:	89 75 e4             	mov    DWORD PTR [rbp-0x1c],esi
-  4006b9:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  4006b9:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0 
   4006c0:	eb 2b                	jmp    4006ed <printArray+0x43>
-  4006c2:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  4006c2:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4] 
   4006c5:	48 98                	cdqe   
   4006c7:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
   4006ce:	00 
@@ -108,7 +128,7 @@
   4006da:	bf 18 08 40 00       	mov    edi,0x400818
   4006df:	b8 00 00 00 00       	mov    eax,0x0
   4006e4:	e8 d7 fd ff ff       	call   4004c0 <printf@plt>
-  4006e9:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  4006e9:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1 
   4006ed:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   4006f0:	3b 45 e4             	cmp    eax,DWORD PTR [rbp-0x1c]
   4006f3:	7c cd                	jl     4006c2 <printArray+0x18>
@@ -131,14 +151,14 @@
   400734:	c7 45 e8 09 00 00 00 	mov    DWORD PTR [rbp-0x18],0x9
   40073b:	c7 45 ec 02 00 00 00 	mov    DWORD PTR [rbp-0x14],0x2
   400742:	c7 45 fc 08 00 00 00 	mov    DWORD PTR [rbp-0x4],0x8
-  400749:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  400749:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4] 
   40074c:	48 8d 45 d0          	lea    rax,[rbp-0x30]
   400750:	89 d6                	mov    esi,edx
   400752:	48 89 c7             	mov    rdi,rax
   400755:	e8 99 fe ff ff       	call   4005f3 <bubbleSort>
   40075a:	bf 42 08 40 00       	mov    edi,0x400842
   40075f:	e8 4c fd ff ff       	call   4004b0 <puts@plt>
-  400764:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  400764:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4] 
   400767:	48 8d 45 d0          	lea    rax,[rbp-0x30]
   40076b:	89 d6                	mov    esi,edx
   40076d:	48 89 c7             	mov    rdi,rax
