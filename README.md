@@ -19,7 +19,7 @@ gcc -S -o app.s app.c
 
 ```bash
 gcc -ggdb -o app-b.exe app.c 
-```
+
 
 	* -ggdb : Produce debugging info for use by GDB. 
 
@@ -96,3 +96,6 @@ objdump -p app.exe | grep NEEDED
 ```bash
 ldd app.exe
 ```
+
+links
+
