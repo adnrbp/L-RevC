@@ -13,14 +13,15 @@ gcc -o app.exe app.c
 ```bash
 gcc -S -o app.s app.c 
 ```
+* -S : stop after the stage of compilation proper; do not assemble.
 
 	* -S : stop after the stage of compilation proper; do not assemble.
 
 
 ```bash
 gcc -ggdb -o app-b.exe app.c 
-
-
+```
+*
 	* -ggdb : Produce debugging info for use by GDB. 
 
 
