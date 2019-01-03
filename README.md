@@ -69,8 +69,8 @@ gdb -q ./app-b.exe
 
 	Comands for memory inspection:
 * x/<FMT><ADDRESS> : examine memory; FMT = Format
-* x/10xb 0xBFFFF450
-* x/10cb $edi
+* x/10xb 0xBFFFF450 // x= hex, b = byte
+* x/10cb $edi. // c = character constant
 
 
 
